@@ -43,8 +43,13 @@ class Duck {
         FlyBehavior* flyBehavior;
         QuackBehavior* quackBehavior;
     public:
-        virtual void performQuack() = 0;
-        virtual void performFly() = 0;
+        void performQuack(){
+            quackBehavior->quack();
+        }
+        void performFly(){
+            flyBehavior->fly();
+        }
+        virtual void display() = 0;
 };
 
 class MallardDuck : public Duck {
@@ -53,11 +58,8 @@ class MallardDuck : public Duck {
             flyBehavior = new FlyWithWings();
             quackBehavior = new Squeak();
         }
-        void performQuack() {
-            quackBehavior->quack();
-        }
-        void performFly() {
-            flyBehavior->fly();
+        void display() {
+            cout << "I'm a real Mallard duck!" << endl;
         }
 };
 
@@ -67,11 +69,8 @@ class ModelDuck : public Duck {
             flyBehavior = new FlyNoWay();
             quackBehavior = new MuteQuack();
         }
-        void performQuack() {
-            quackBehavior->quack();
-        }
-        void performFly() {
-            flyBehavior->fly();
+        void display() {
+            cout << "I'm a model duck!" << endl;
         }
 };
 
@@ -79,10 +78,12 @@ int main() {
     Duck* mallard = new MallardDuck();
     mallard->performFly();
     mallard->performQuack();
+    mallard->display();
 
     Duck* model = new ModelDuck();
     model->performFly();
     model->performQuack();
+    model->display();
 
     return 0;
 }
