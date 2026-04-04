@@ -1,6 +1,88 @@
 #include "../../all.h"
+using namespace std;
+class FlyBehavior {
+    public:
+        virtual void fly() = 0;
+};
+
+class QuackBehavior {
+    public:
+        virtual void quack() = 0;
+};
+
+class FlyWithWings : public FlyBehavior {
+    public:
+        void fly() {
+            cout << "I'm flying with wings!" << endl;
+        }
+};
+
+class Squeak : public QuackBehavior {
+    public:
+        void quack() {
+            cout << "Squeak!" << endl;
+        }
+};
+
+class FlyNoWay : public FlyBehavior {
+    public:
+        void fly() {
+            cout << "I can't fly!" << endl;
+        }
+};
+
+class MuteQuack : public QuackBehavior {
+    public:
+        void quack() {
+            cout << "Cannot quack!" << endl;
+        }
+};
+
+class Duck {
+    protected:
+        FlyBehavior* flyBehavior;
+        QuackBehavior* quackBehavior;
+    public:
+        virtual void performQuack() = 0;
+        virtual void performFly() = 0;
+};
+
+class MallardDuck : public Duck {
+    public:
+        MallardDuck(){
+            flyBehavior = new FlyWithWings();
+            quackBehavior = new Squeak();
+        }
+        void performQuack() {
+            quackBehavior->quack();
+        }
+        void performFly() {
+            flyBehavior->fly();
+        }
+};
+
+class ModelDuck : public Duck {
+    public:
+        ModelDuck(){
+            flyBehavior = new FlyNoWay();
+            quackBehavior = new MuteQuack();
+        }
+        void performQuack() {
+            quackBehavior->quack();
+        }
+        void performFly() {
+            flyBehavior->fly();
+        }
+};
 
 int main() {
-    cout << "Hello, World!" << endl;
+    Duck* mallard = new MallardDuck();
+    mallard->performFly();
+    mallard->performQuack();
+
+    Duck* model = new ModelDuck();
+    model->performFly();
+    model->performQuack();
+
     return 0;
 }
