@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/sandy/Desktop/system-design/patterns/State/State'
+relocations:     []
+...
